@@ -12,14 +12,14 @@ extension Color {
     init(hex: String) {
         let scanner = Scanner(string: hex)
         scanner.currentIndex = hex.startIndex
-
+        
         var rgbValue: UInt64 = 0
         scanner.scanHexInt64(&rgbValue)
-
+        
         let r = Double((rgbValue >> 16) & 0xFF) / 255.0
         let g = Double((rgbValue >> 8) & 0xFF) / 255.0
         let b = Double(rgbValue & 0xFF) / 255.0
-
+        
         self.init(red: r, green: g, blue: b)
     }
 }
@@ -32,10 +32,10 @@ struct Toast: Equatable {
 }
 
 enum ToastStyle {
-  case error
-  case warning
-  case success
-  case info
+    case error
+    case warning
+    case success
+    case info
 }
 
 extension ToastStyle {
@@ -66,12 +66,13 @@ extension ToastStyle {
 }
 
 extension View {
-  func toastView(toast: Binding<Toast?>) -> some View {
-    self.modifier(ToastModifier(toast: toast))
-  }
-  
-func hideKeyboard() {
-    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-}
+    func toastView(toast: Binding<Toast?>) -> some View {
+        self.modifier(ToastModifier(toast: toast))
+    }
+    
+    func hideKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
     
 }
+

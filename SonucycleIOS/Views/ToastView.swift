@@ -43,6 +43,7 @@ struct ToastView: View {
                 .opacity(1)
             )
         .padding(.horizontal, 16)
+        
     }
 }
 
