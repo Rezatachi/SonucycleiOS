@@ -17,7 +17,7 @@ struct MainTabView: View {
             
             YouView()
                 .tabItem {
-                    Label("You", systemImage: "person.circle")
+                    Label("Profile", systemImage: "person.circle")
                 }
         }
     }

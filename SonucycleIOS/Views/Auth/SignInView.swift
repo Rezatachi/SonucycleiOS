@@ -9,10 +9,10 @@ import SwiftUI
 
 struct SignInView: View {
     @EnvironmentObject var viewModel: AuthViewModel
-    @Environment(\.colorScheme) var colorScheme // Detects Light/Dark Mode
+    @Environment(\.colorScheme) var colorScheme
     @State private var toast: Toast? = nil
     @State private var navigateToHome = false
-
+    
     // Accept toast from child view like ForgotPasswordView
     var toastFromChild: Toast? = nil
     
@@ -85,6 +85,7 @@ struct SignInView: View {
                             
                             
                             
+                            
                             if let errorMessage = viewModel.errorMessage {
                                 toast = Toast(message: errorMessage, style: .error)
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
@@ -107,6 +108,10 @@ struct SignInView: View {
                                 .foregroundColor(colorScheme == .dark ? .black : .white)
                                 .cornerRadius(12)
                         }
+                    }
+                    .onTapGesture {
+                        hideKeyboard()
+                    
                     }
                     .contentShape(Rectangle()) // 🔹 Makes the whole button area clickable
                     .padding(.horizontal, 40)
@@ -223,4 +228,5 @@ struct SignInView: View {
 
 #Preview {
     SignInView()
+        .environmentObject(AuthViewModel())
 }
