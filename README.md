@@ -165,34 +165,147 @@ class MusicRecommendationService {
 
 ---
 
-## **🛣 Next Steps**
-### **1️⃣ Authentication & User Management**
-- [ ] ✅ **Sign-In Page (Done)**
-- [ ] 🔲 **Sign-Up Page**
-- [ ] 🔲 **OAuth for Apple & Google**
-- [ ] 🔲 **Password Reset UI & Logic**
-- [ ] 🔲 **Profile Page for Users**
+## Sonu
 
-### **2️⃣ Core Features**
-- [ ] 🔲 **Emotion Journal Logging (Text & Audio)**
-- [ ] 🔲 **Connect Hume AI for Sentiment Analysis**
-- [ ] 🔲 **Generate Weekly Mood Reports**
-- [ ] 🔲 **Graphical Visualization of Emotional Trends**
+---
 
-### **3️⃣ Additional Features**
-- [ ] 🔲 **Music API Integration for Mood-Based Songs**
-- [ ] 🔲 **Notifications & Reminders for Daily Logs**
-- [ ] 🔲 **Secure Storage & Data Privacy Implementation**
+---
 
-### **4️⃣ UI Enhancements**
-- [ ] 🔲 **Animations for Transitions & Screen Changes**
-- [ ] 🔲 **Dark Mode Optimization**
-- [ ] 🔲 **Custom Loading Indicators & UI Feedback**
+---
 
-### **5️⃣ Deployment & Testing**
-- [ ] 🔲 **Unit Tests for ViewModels**
-- [ ] 🔲 **App Store Submission Process**
-- [ ] 🔲 **Performance Optimization & Code Cleanup**
+## **🚀 Phase 1: Core Authentication & User Management**
+
+- [x]  Email/Password Sign-In & Sign-Up
+- [x]  Valid TextField
+- [x]  Session Persistence
+- [x]  Password Reset Flow with Deep Linking
+- [x]  UI Profile Page
+- [x]  Account Deletion
+
+---
+
+## **📓 Phase 2: Emotional Health Journaling**
+
+🔲 Text-Based Journal
+
+- [x]  UI for creating entries
+- [ ]  View journal history by date
+- [ ]  Tag entries with mood labels
+- [ ]  Secure Supabase storage
+
+🔲 Voice Journal Support
+
+- [ ]  Audio recording & upload
+- [ ]  Transcription (optional)
+- [ ]  Store voice logs
+
+🔲 Video Journal (Future)
+
+- [ ]  Record video
+- [ ]  Privacy controls
+- [ ]  Save securely
+
+---
+
+## **🧠 Phase 3: Emotion Intelligence via Hume AI**
+
+🔲 Expression Measurement
+
+- [ ]  Integrate voice expression analysis
+- [ ]  Annotate journals with detected emotional states
+- [ ]  Build mood trends from audio signals
+
+🔲 Emotion-Aware Journal Feedback
+
+- [ ]  Suggest mood tags based on tone
+- [ ]  Display subtle emotion insights (e.g. warmth, tension, hopefulness)
+
+🔲 Empathic Voice Interface (EVI)
+
+- [ ]  Basic check-in conversations
+- [ ]  Real-time feedback based on user tone
+- [ ]  Guided sessions that adapt to emotion
+
+🔲 Passive Mood Detection
+
+- [ ]  Quick voice check-in daily
+- [ ]  Alert if tone shows prolonged stress
+
+---
+
+## **📊 Phase 4: Emotional Insight & Visualization**
+
+🔲 Mood Dashboard
+
+- [ ]  Line/pie graphs of mood over time
+- [ ]  Weekly insights based on journal tone
+- [ ]  “You felt more X than Y this week” summaries
+
+🔲 Calendar View
+
+- [ ]  Tap to view journal entry + emotion tag
+- [ ]  Use emoji/symbol based indicators for mood
+
+---
+
+## **🎵 Phase 5: Music & Wellness Suggestions**
+
+🔲 Music Recommendations
+
+- [ ]  Connect Spotify or Apple Music API
+- [ ]  Generate playlists based on mood
+- [ ]  Mood-based autoplay + saving playlists
+
+🔲 Well-being Suggestions
+
+- [ ]  Recommend breathing, meditation, or reflections
+- [ ]  Based on recent entries or tone
+
+---
+
+## **💸 Phase 6: Monetization & Growth**
+
+🔲 Soft-Paywall
+
+- [ ]  Lock premium features (e.g., long-term analytics, music, video journals)
+- [ ]  Prompt upgrade for in-depth emotion breakdown
+
+🔲 Launch Screen + Onboarding
+
+- [ ]  Animated launch logo
+- [ ]  Walkthrough of app benefits
+- [ ]  Onboarding personalization (choose goals)
+
+🔲 Pricing & Subscription
+
+- [ ]  Design free vs premium tiers
+- [ ]  Integrate StoreKit for purchases
+
+🔲 Analytics (optional)
+
+- [ ]  Track feature usage for product decisions
+- [ ]  Funnels for onboarding → upgrade flow
+
+---
+
+## **🧼 Phase 7: UI Polish & App Optimization**
+
+🔲 General UI Cleanup
+
+- [ ]  Dark/light mode consistency
+- [ ]  Consistent use of padding, colors, gradients
+- [ ]  Empty states, animations
+
+🔲 Bug Fixes & Performance
+
+- [ ]  Toast queueing
+- [ ]  Supabase error edge cases
+- [ ]  Audio/video memory cleanup
+
+🔲 Accessibility & Localization
+
+- [ ]  Dynamic text scaling
+- [ ]  Localize for 2-3 key languages
 
 ---
 
