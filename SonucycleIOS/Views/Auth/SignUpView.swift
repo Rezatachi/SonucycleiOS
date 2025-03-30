@@ -3,11 +3,13 @@ import SwiftUI
 struct SignUpView: View {
     @EnvironmentObject var viewModel: AuthViewModel
     @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.dismiss) private var dismiss
     @State private var toast: Toast? = nil
-    @Environment(\.dismiss) private var dismiss // Allows dismissing the view after sign-up
+    
 
     var body: some View {
         NavigationStack {
+            ScrollView{
                 ZStack {
                     VStack {
                         Image(.vector)
@@ -105,20 +107,23 @@ struct SignUpView: View {
                 }
                 
             }
-        .safeAreaInset(edge: .top) {
-            if let toast = toast {
-                ToastView(
-                    message: toast.message,
-                    style: toast.style,
-                    onCancelledTapped: { self.toast = nil }
-                )
-                .transition(.move(edge: .top).combined(with: .opacity))
-                .animation(.easeInOut(duration: 0.3), value: toast)
+            .safeAreaInset(edge: .top) {
+                if let toast = toast {
+                    ToastView(
+                        message: toast.message,
+                        style: toast.style,
+                        onCancelledTapped: { self.toast = nil }
+                    )
+                    .transition(.move(edge: .top).combined(with: .opacity))
+                    .animation(.easeInOut(duration: 0.3), value: toast)
+                }
             }
         }
+        .scrollDismissesKeyboard(.interactively)
     }
 }
 
 #Preview {
     SignUpView()
+        .environmentObject(AuthViewModel())
 }
