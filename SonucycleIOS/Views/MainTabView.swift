@@ -25,5 +25,6 @@ struct MainTabView: View {
 
 #Preview {
     MainTabView()
-        .environmentObject(AuthViewModel()) // Provide a default AuthViewModel for preview
+        .environmentObject(AuthViewModel())
+        .preferredColorScheme(.dark)
 }

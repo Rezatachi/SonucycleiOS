@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct ForgotPasswordView: View {
-    @StateObject private var viewModel = AuthViewModel()
+    @EnvironmentObject var viewModel : AuthViewModel
     @State private var email: String = ""
     @State private var showConfirmation: Bool = false
     @State private var errorMessage: String?
@@ -9,57 +9,52 @@ struct ForgotPasswordView: View {
     @State private var navigateToHome = false
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) var dismiss
-    
+
     var body: some View {
         NavigationStack {
             ZStack {
-                // Background
-                LinearGradient(
-                    gradient: Gradient(colors: colorScheme == .dark ? [Color.black, Color.black] : [Color.white, Color.gray.opacity(0.2)]),
-                    startPoint: .top, endPoint: .bottom
-                )
-                .ignoresSafeArea()
+                AppTheme.background(for: colorScheme)
+                    .ignoresSafeArea()
 
                 VStack {
                     Image(.vector)
                         .resizable()
                         .scaledToFit()
                         .frame(width: 100, height: 100)
-                        .background(.black)
+                        .background(AppTheme.accent(for: colorScheme))
                         .cornerRadius(50)
-                    
+
                     Spacer().frame(height: 50)
-                    
+
                     Text("Enter your email to receive a password reset link.")
-                                            .multilineTextAlignment(.center)
-                                            .foregroundColor(.gray)
-                                            .padding(.horizontal, 40)
-                    
+                        .multilineTextAlignment(.center)
+                        .foregroundColor(.gray)
+                        .padding(.horizontal, 40)
+                        .font(.silkBody())
+
                     Spacer().frame(height: 50)
-                    
+
                     VStack(spacing: 12) {
                         VStack(alignment: .leading) {
-                            
                             Text("Email")
-                                .font(.subheadline)
-                                .fontWeight(.bold)
-                                .foregroundColor(colorScheme == .dark ? .white : .black)
-                            
+                                .font(.silkCaption())
+                                .foregroundColor(AppTheme.text(for: colorScheme))
+
                             TextField("Enter your email", text: $email)
                                 .autocapitalization(.none)
                                 .keyboardType(.emailAddress)
                                 .disableAutocorrection(true)
                                 .padding()
-                                .background(colorScheme == .dark ? Color.black.opacity(0.2) : Color.white)
+                                .background(AppTheme.background(for: colorScheme))
                                 .cornerRadius(12)
                                 .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.gray, lineWidth: 1))
-                                .foregroundColor(colorScheme == .dark ? .white : .black)
+                                .foregroundColor(AppTheme.text(for: colorScheme))
                         }
 
                         Button {
                             Task {
                                 await viewModel.resetPassword(email: email)
-                                
+
                                 if let errorMessage = viewModel.errorMessage {
                                     toast = Toast(message: errorMessage, style: .error)
                                     DispatchQueue.main.asyncAfter(deadline: .now() + 2) { toast = nil }
@@ -73,10 +68,11 @@ struct ForgotPasswordView: View {
                             }
                         } label: {
                             Text("Send Reset Link")
+                                .font(.silkBody())
                                 .frame(maxWidth: .infinity)
                                 .padding()
-                                .background(colorScheme == .dark ? Color.white : Color.black)
-                                .foregroundColor(colorScheme == .dark ? .black : .white)
+                                .background(AppTheme.accent(for: colorScheme))
+                                .foregroundColor(.white)
                                 .cornerRadius(12)
                         }
                         .padding(.top, 10)
@@ -96,7 +92,7 @@ struct ForgotPasswordView: View {
                     dismiss()
                 }) {
                     Image(systemName: "chevron.left")
-                        .foregroundColor(colorScheme == .dark ? .white : .black)
+                        .foregroundColor(AppTheme.text(for: colorScheme))
                 }
             }
         }
@@ -116,5 +112,5 @@ struct ForgotPasswordView: View {
 
 #Preview {
     ForgotPasswordView()
-    
+        .environmentObject(AuthViewModel()) // Ensure to provide the AuthViewModel for preview
 }

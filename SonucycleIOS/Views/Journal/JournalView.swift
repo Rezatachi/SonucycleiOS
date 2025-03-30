@@ -1,10 +1,3 @@
-//
-//  JournalView.swift
-//  SonucycleIOS
-//
-//  Created by Abraham Belayneh on 2/18/25.
-//
-
 import SwiftUI
 
 struct JournalView: View {
@@ -20,6 +13,7 @@ struct JournalView: View {
                     if journalEntries.isEmpty {
                         Spacer()
                         Text("No journal entries yet")
+                            .font(.silkBody())
                             .foregroundColor(.gray)
                         Spacer()
                     } else {
@@ -35,9 +29,7 @@ struct JournalView: View {
                 }
                 .navigationTitle("Journal")
                 .toolbarBackground(.hidden, for: .navigationBar)
-                
-
-                    .sheet(isPresented: $showJournalCreation) {
+                .sheet(isPresented: $showJournalCreation) {
                     JournalCreationView(
                         onSave: { newEntry in
                             journalEntries.append(newEntry)
@@ -46,15 +38,10 @@ struct JournalView: View {
                     )
                 }
             }
-            
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(
-                LinearGradient(
-                    gradient: Gradient(colors: colorScheme == .dark ? [Color.black, Color.black] : [Color.white, Color.gray.opacity(0.2)]),
-                    startPoint: .top,
-                    endPoint: .bottom
-                )
-                .edgesIgnoringSafeArea(.all)
+                AppTheme.background(for: colorScheme)
+                    .ignoresSafeArea()
             )
             .safeAreaInset(edge: .bottom, alignment: .trailing) {
                 Button(action: {
@@ -63,20 +50,16 @@ struct JournalView: View {
                     Image(systemName: "plus")
                         .font(.system(size: 24, weight: .bold))
                         .frame(width: 60, height: 60)
-                        .background(colorScheme == .dark ? Color.white : Color.black)
-                        .foregroundColor(colorScheme == .dark ? .black : .white)
+                        .background(AppTheme.accent(for: colorScheme))
+                        .foregroundColor(.white)
                         .clipShape(Circle())
                         .shadow(radius: 10)
                         .padding()
-                        
                 }
-
             }
         }
         .toastView(toast: $toast)
     }
-        
-            
 }
 
 #Preview{

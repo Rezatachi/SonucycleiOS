@@ -18,38 +18,36 @@ struct YouView: View {
                             .foregroundColor(.gray)
 
                         Text("Your Name")
-                            .font(.title3)
-                            .fontWeight(.bold)
-                            .foregroundColor(colorScheme == .dark ? .white : .black)
+                            .font(.silkHeading(size: 20))
+                            .foregroundColor(AppTheme.text(for: colorScheme))
 
                         Text("you@example.com")
-                            .font(.subheadline)
+                            .font(.silkBody(size: 14))
                             .foregroundColor(.gray)
                     }
                     .padding()
                     .frame(maxWidth: .infinity)
-                    .background(colorScheme == .dark ? Color.black.opacity(0.3) : Color.white)
+                    .background(AppTheme.background(for: colorScheme))
                     .cornerRadius(20)
                     .shadow(color: .gray.opacity(0.2), radius: 10, x: 0, y: 4)
 
                     // Recent Logs Section
                     VStack(alignment: .leading, spacing: 10) {
                         Text("Recent Emotional Logs")
-                            .font(.headline)
-                            .foregroundColor(colorScheme == .dark ? .white : .black)
+                            .font(.silkHeading(size: 18))
+                            .foregroundColor(AppTheme.text(for: colorScheme))
 
                         ForEach(0..<3) { i in
                             RoundedRectangle(cornerRadius: 12)
-                                .fill(Color.gray.opacity(0.1))
+                                .fill(AppTheme.background(for: colorScheme).opacity(0.8))
                                 .frame(height: 60)
                                 .overlay(
                                     HStack {
                                         VStack(alignment: .leading) {
                                             Text("Feeling \(i == 0 ? "Grateful" : i == 1 ? "Anxious" : "Calm")")
-                                                .font(.body)
-                                                .fontWeight(.medium)
+                                                .font(.silkBody())
                                             Text("Mar 27, 2025")
-                                                .font(.caption)
+                                                .font(.silkCaption(size: 12))
                                                 .foregroundColor(.gray)
                                         }
                                         Spacer()
@@ -61,57 +59,46 @@ struct YouView: View {
                         }
                     }
                     .padding()
-                    .background(colorScheme == .dark ? Color.black.opacity(0.2) : Color.white)
+                    .background(AppTheme.background(for: colorScheme))
                     .cornerRadius(20)
                     .shadow(color: .gray.opacity(0.1), radius: 8, x: 0, y: 2)
 
                     // Other Suggestions
                     VStack(alignment: .leading, spacing: 12) {
                         Text("Things you could add here:")
-                            .font(.headline)
+                            .font(.silkBody())
+                            .foregroundColor(AppTheme.text(for: colorScheme))
 
                         Text("• Add a profile picture")
-                            .foregroundColor(.gray)
                         Text("• Add a bio")
-                            .foregroundColor(.gray)
                         Text("• Add a goal")
-                            .foregroundColor(.gray)
                     }
+                    .font(.silkCaption())
                     .foregroundColor(.gray)
                     .padding()
                 }
                 .padding()
             }
-        
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         showSettings.toggle()
                     } label: {
                         Image(systemName: "gearshape")
-                            .foregroundColor(colorScheme == .dark ? .white : .black)
+                            .foregroundColor(AppTheme.text(for: colorScheme))
                     }
                 }
             }
             .sheet(isPresented: $showSettings) {
-                SettingsModalView()                    .presentationDetents([.large])
+                SettingsModalView()
+                    .presentationDetents([.large])
             }
-            .background(
-                LinearGradient(
-                    gradient: Gradient(colors: colorScheme == .dark ? [Color.black, Color.black] : [Color.white, Color.gray.opacity(0.2)]),
-                    startPoint: .top, endPoint: .bottom
-                )
-            )
+            .background(AppTheme.background(for: colorScheme).ignoresSafeArea())
         }
-        .background(
-            LinearGradient(
-                gradient: Gradient(colors: colorScheme == .dark ? [Color.black, Color.black] : [Color.white, Color.gray.opacity(0.2)]),
-                startPoint: .top, endPoint: .bottom
-            )
-        )
+        .background(AppTheme.background(for: colorScheme).ignoresSafeArea())
     }
 }
 
 #Preview {
-    YouView().environmentObject(AuthViewModel())
+    YouView().environmentObject(AuthViewModel()).preferredColorScheme(.dark)
 }
