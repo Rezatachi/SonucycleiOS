@@ -15,5 +15,13 @@
 			</array>
 		</dict>
 	</array>
+	<key>UTImportedTypeDeclarations</key>
+	<array>
+		<dict/>
+	</array>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Silk Flower.otf</string>
+	</array>
 </dict>
 </plist>

@@ -14,19 +14,19 @@ struct JournalCardView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(entry.title)
-                .font(.headline)
-                .foregroundColor(colorScheme == .dark ? .white : .black)
+                .font(.silkHeading(size: 20))
+                .foregroundColor(AppTheme.text(for: colorScheme))
 
             Text(entry.content)
-                .font(.subheadline)
-                .foregroundColor(colorScheme == .dark ? .white : .black)
+                .font(.silkBody(size: 16))
+                .foregroundColor(AppTheme.text(for: colorScheme))
 
             Text(entry.timestamp.formatted(date: .abbreviated, time: .shortened))
-                .font(.caption)
+                .font(.silkCaption(size: 12))
                 .foregroundColor(.gray)
         }
         .padding()
-        .background(colorScheme == .dark ? Color.black.opacity(0.2) : Color.white)
+        .background(AppTheme.background(for: colorScheme))
         .cornerRadius(16)
         .shadow(color: .gray.opacity(0.3), radius: 5, x: 0, y: 2)
     }

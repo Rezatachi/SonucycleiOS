@@ -1,10 +1,3 @@
-//
-//  HomeView.swift
-//  SonucycleIOS
-//
-//  Created by Abraham Belayneh on 3/17/25.
-//
-
 import SwiftUI
 
 struct SignInView: View {
@@ -12,59 +5,59 @@ struct SignInView: View {
     @Environment(\.colorScheme) var colorScheme
     @State private var toast: Toast? = nil
     @State private var navigateToHome = false
-    
-    // Accept toast from child view like ForgotPasswordView
+
     var toastFromChild: Toast? = nil
-    
+
     var body: some View {
-        NavigationStack{
+        NavigationStack {
             ZStack {
                 VStack {
                     Spacer()
-                    
+
                     // Welcome Text
                     HStack {
                         Text("Sonucycle")
-                            .font(.title)
-                            .fontWeight(.bold)
-                            .foregroundColor(colorScheme == .dark ? .white : .black)
+                            .font(.silkHeading(size: 28))
+                            .foregroundColor(AppTheme.text(for: colorScheme))
                             .padding(.top, 20)
+
                         Image(.vector)
                             .resizable()
                             .scaledToFit()
                             .frame(width: 30, height: 30)
-                            .background(.black)
+                            .background(AppTheme.accent(for: colorScheme))
                             .cornerRadius(50)
                             .padding(.top, 20)
                     }
-                    
+
                     // Input Fields
                     VStack(spacing: 12) {
                         TextField("Email address", text: $viewModel.email)
                             .padding()
-                            .background(colorScheme == .dark ? Color.black.opacity(0.2) : Color.white)
+                            .background(AppTheme.background(for: colorScheme))
                             .cornerRadius(12)
                             .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.gray, lineWidth: 1))
                             .autocapitalization(.none)
                             .keyboardType(.emailAddress)
-                            .foregroundColor(colorScheme == .dark ? .white : .black)
-                        
+                            .foregroundColor(AppTheme.text(for: colorScheme))
+
                         SecureField("Password", text: $viewModel.password)
                             .padding()
-                            .background(colorScheme == .dark ? Color.black.opacity(0.2) : Color.white)
+                            .background(AppTheme.background(for: colorScheme))
                             .cornerRadius(12)
                             .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.gray, lineWidth: 1))
-                            .foregroundColor(colorScheme == .dark ? .white : .black)
+                            .foregroundColor(AppTheme.text(for: colorScheme))
                     }
                     .padding(.horizontal, 40)
-                    
+
                     // Register Link
                     NavigationLink(destination: SignUpView().navigationBarBackButtonHidden(true)) {
                         Text("New User? Register Here")
-                            .foregroundColor(colorScheme == .dark ? .white : .black)
-                            .font(.footnote)
+                            .foregroundColor(AppTheme.text(for: colorScheme))
+                            .font(.silkCaption())
                     }
                     .padding(5)
+
                     // Sign In Button
                     Button {
                         Task {
@@ -77,15 +70,12 @@ struct SignInView: View {
                                 }
                                 return
                             }
-                            
+
                             await viewModel.signIn(
                                 email: viewModel.email,
                                 password: viewModel.password
                             )
-                            
-                            
-                            
-                            
+
                             if let errorMessage = viewModel.errorMessage {
                                 toast = Toast(message: errorMessage, style: .error)
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
@@ -102,93 +92,92 @@ struct SignInView: View {
                                 .padding()
                         } else {
                             Text("Sign In")
+                                .font(.silkBody())
                                 .frame(maxWidth: .infinity)
                                 .padding()
-                                .background(colorScheme == .dark ? Color.white : Color.black)
-                                .foregroundColor(colorScheme == .dark ? .black : .white)
+                                .background(AppTheme.accent(for: colorScheme))
+                                .foregroundColor(.white)
                                 .cornerRadius(12)
                         }
                     }
                     .onTapGesture {
                         hideKeyboard()
-                    
                     }
-                    .contentShape(Rectangle()) // 🔹 Makes the whole button area clickable
+                    .contentShape(Rectangle())
                     .padding(.horizontal, 40)
                     .padding(.top, 10)
-                    
-                    // Apple Sign-In Button
-                    Button(action: {
-                        Task { await viewModel.signInWithApple() }
-                    }) {
-                        HStack {
-                            Image(systemName: "applelogo")
-                            Text("Sign in with Apple")
+
+                    // OAuth Buttons
+                    Group {
+                        Button(action: {
+                            Task { await viewModel.signInWithApple() }
+                        }) {
+                            HStack {
+                                Image(systemName: "applelogo")
+                                Text("Sign in with Apple")
+                            }
                         }
-                    }
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color.white.opacity(colorScheme == .dark ? 0 : 1))
-                    .foregroundColor(colorScheme == .dark ? .white : .black)
-                    .cornerRadius(12)
-                    .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.gray, lineWidth: 1))
-                    .padding(.horizontal, 40)
-                    .padding(.top, 10)
-                    
-                    // Google Sign-In Button
-                    Button(action: {
-                        Task {
-                            await viewModel.signInWithGoogle()
-                            if let errorMessage = viewModel.errorMessage {
-                                toast = Toast(message: errorMessage, style: .error)
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                                    withAnimation {
-                                        toast = nil
+                        .font(.silkBody())
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(AppTheme.background(for: colorScheme))
+                        .foregroundColor(AppTheme.text(for: colorScheme))
+                        .cornerRadius(12)
+                        .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.gray, lineWidth: 1))
+                        .padding(.horizontal, 40)
+                        .padding(.top, 10)
+
+                        Button(action: {
+                            Task {
+                                await viewModel.signInWithGoogle()
+                                if let errorMessage = viewModel.errorMessage {
+                                    toast = Toast(message: errorMessage, style: .error)
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                                        withAnimation {
+                                            toast = nil
+                                        }
                                     }
                                 }
                             }
+                        }) {
+                            HStack {
+                                Image(systemName: "globe")
+                                Text("Sign in with Google")
+                            }
                         }
-                    }) {
-                        HStack {
-                            Image(systemName: "globe")
-                            Text("Sign in with Google")
-                        }
+                        .font(.silkBody())
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(AppTheme.background(for: colorScheme))
+                        .foregroundColor(AppTheme.text(for: colorScheme))
+                        .cornerRadius(12)
+                        .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.gray, lineWidth: 1))
+                        .padding(.horizontal, 40)
+                        .padding(.top, 10)
                     }
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color.white.opacity(colorScheme == .dark ? 0 : 1))
-                    .foregroundColor(colorScheme == .dark ? .white : .black)
-                    .cornerRadius(12)
-                    .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.gray, lineWidth: 1))
-                    .padding(.horizontal, 40)
-                    .padding(.top, 10)
-                    
+
                     // Forgot Password Link
                     NavigationLink(destination: ForgotPasswordView().navigationBarBackButtonHidden(true)) {
                         Text("Forgot Password?")
-                            .foregroundColor(colorScheme == .dark ? .white : .black)
-                            .font(.footnote)
+                            .foregroundColor(AppTheme.text(for: colorScheme))
+                            .font(.silkCaption())
                     }
                     .padding(.top, 5)
                     .padding(.bottom, 20)
-                    
+
                     Spacer(minLength: 10)
-                    
+
                     // Footer Text
                     Text("© 2025 Sonucycle")
-                        .font(.footnote)
+                        .font(.silkCaption())
                     Text("人生を掴み取れ。")
-                        .font(.footnote)
+                        .font(.silkCaption())
                         .padding(.bottom, 20)
                 }
                 .background(
-                    LinearGradient(
-                        gradient: Gradient(colors: colorScheme == .dark ? [Color.black, Color.black] : [Color.white, Color.gray.opacity(0.2)]),
-                        startPoint: .top, endPoint: .bottom
-                    )
+                    AppTheme.background(for: colorScheme)
+                        .ignoresSafeArea()
                 )
-                .edgesIgnoringSafeArea(.all)
-                
             }
             .safeAreaInset(edge: .top) {
                 if let toast = toast {
@@ -201,7 +190,6 @@ struct SignInView: View {
                     .animation(.easeInOut(duration: 0.3), value: toast)
                 }
             }
-            // Hide Keyboard When Tapped Outside
             .onTapGesture {
                 hideKeyboard()
             }
@@ -214,17 +202,11 @@ struct SignInView: View {
                             toast = nil
                         }
                     }
-                    
                 }
             }
         }
     }
 }
-
-
-
-
-
 
 #Preview {
     SignInView()
